@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
 
@@ -8,6 +9,8 @@ app.use(express.json());
 morgan.token("body", (req) => {
   return JSON.stringify(req.body);
 });
+
+app.use(cors());
 
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
@@ -103,12 +106,13 @@ const calculateId = () => {
   return Math.floor(Math.random() * 10000);
 };
 
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: "unknown endpoint" });
+const unknownEndpoint = (req, res) => {
+  res.status(404).send({ error: "unknown endpoint" });
 };
 
 app.use(unknownEndpoint);
 
-app.listen(3000, "localhost", () => {
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
   console.log("connected");
 });
