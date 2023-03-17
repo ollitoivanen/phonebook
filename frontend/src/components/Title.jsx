@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-const Title = () => {
+function Title() {
   return <h1>Phonebook</h1>;
-};
+}
 
 export default Title;
